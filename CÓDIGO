@@ -1,0 +1,34 @@
+int pinoTMP = A0;
+float leitura, tensao, temperatura;
+int led = 5;
+int motor = 7;
+int buzzer = 6;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(led,OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(motor, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(led,LOW);
+  digitalWrite(buzzer, LOW);
+  digitalWrite(motor,LOW);
+  leitura = analogRead(pinoTMP);          // valor de 0 a 1023
+  tensao = leitura * 5.0 / 1023.0;        // converte para volts
+  temperatura = (tensao - 0.5) * 100.0;   // converte para °C
+
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.println(" °C");
+  if(temperatura>=30){
+      digitalWrite(motor,HIGH);
+  }
+  if(temperatura>=50){
+  digitalWrite(led,HIGH);
+  digitalWrite(buzzer, HIGH);
+  digitalWrite(motor,HIGH); 
+  }
+  delay(1000);
+}
